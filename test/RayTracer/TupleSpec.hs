@@ -4,6 +4,9 @@ import Test.Hspec
 
 import RayTracer.Tuple
 
+approximately :: (Metric f, Floating a, Ord a) => a -> f a  -> f a  -> Bool
+approximately e v1 v2 = distance v1 v2 < e
+
 spec :: Spec
 spec = do
         describe "Tuple basics" $ do
@@ -48,5 +51,22 @@ spec = do
             it "divides tuple by a scalar" $ do
                 let a = tuple 1 (-2) 3 (-4)
                 a ^/ 2 `shouldBe` tuple 0.5 (-1) 1.5 (-2)
+        describe "Magnitude" $ do
+            it "computes norm" $ do
+                norm (vector 1 0 0) `shouldBe` 1
+                norm (vector 0 1 0) `shouldBe` 1
+                norm (vector 0 0 1) `shouldBe` 1
+                norm (vector 1 2 3) `shouldBe` sqrt 14
+                norm (vector (-1) (-2) (-3)) `shouldBe` sqrt 14
+            it "normalizes a vector" $ do
+                normalize (vector 4 0 0) `shouldBe` vector 1 0 0
+                let v = vector 1 2 3
+                normalize v `shouldSatisfy` approximately 0.00001 (vector 0.26726 0.53452 0.80178)
+                norm (normalize v) `shouldBe` 1
+        describe "dot" $ do
+            it "computes dot product" $ do
+                let a = vector 1 2 3
+                let b = vector 2 3 4
+                a `dot` b `shouldBe` 20
 
 

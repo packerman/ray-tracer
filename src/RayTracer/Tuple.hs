@@ -1,11 +1,13 @@
 module RayTracer.Tuple
 (
+    module Linear.Metric,
     module Linear.V4,
     module Linear.Vector,
     module Control.Lens.Getter, 
     module RayTracer.Tuple)
  where
 
+import Linear.Metric
 import Linear.V4 (V4(..), _x, _y, _z, _w)
 import Linear.Vector
 
