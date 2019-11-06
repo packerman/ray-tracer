@@ -68,5 +68,11 @@ spec = do
                 let a = vector 1 2 3
                 let b = vector 2 3 4
                 a `dot` b `shouldBe` 20
+        describe "cross" $ do
+            it "computes cross product" $ do
+                let a = vector 1 2 3
+                let b = vector 2 3 4
+                a `cross` b `shouldBe` vector (-1) 2 (-1)
+                b `cross` a `shouldBe` vector 1 (-2) 1
 
 
