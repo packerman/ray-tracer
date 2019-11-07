@@ -20,18 +20,18 @@ type Tuple = V4 Double
 tuple :: Double -> Double -> Double -> Double -> Tuple
 tuple = V4
 
-isPoint :: V4 Double -> Bool
+isPoint :: Tuple -> Bool
 isPoint (V4 _ _ _ w) = w == 1 
 
-isVector :: V4 Double -> Bool
+isVector :: Tuple -> Bool
 isVector (V4 _ _ _ w) = w == 0
 
-type Point = V4 Double
+type Point = Tuple
 
 point :: Double -> Double -> Double -> Point
 point x y z = V4 x y z 1
 
-type Vector = V4 Double
+type Vector = Tuple
 
 vector :: Double -> Double -> Double -> Vector
 vector x y z = V4 x y z 0 
