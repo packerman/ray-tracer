@@ -21,6 +21,8 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- linear
+- lens
 
 library:
   source-dirs: src
@@ -29,6 +31,15 @@ executables:
   ray-tracer-exe:
     main:                Main.hs
     source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - ray-tracer
+  projectile-exe:
+    main:                projectile.hs
+    source-dirs:         example
     ghc-options:
     - -threaded
     - -rtsopts
@@ -46,3 +57,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - ray-tracer
+    - hspec
