@@ -4,8 +4,11 @@ import Test.Hspec
 
 import RayTracer.Tuple
 
-approximately :: (Metric f, Floating a, Ord a) => a -> f a  -> f a  -> Bool
-approximately e v1 v2 = distance v1 v2 < e
+nearBy :: (Metric f, Num a, Ord a) => a -> f a -> f a -> Bool
+nearBy e v1 v2 = qd v1 v2 < e
+
+near :: (Additive f, Num a, Epsilon (f a)) => f a -> f a -> Bool
+near a1 a2 = nearZero $ a1 ^-^ a2
 
 spec :: Spec
 spec = do
@@ -61,18 +64,34 @@ spec = do
             it "normalizes a vector" $ do
                 normalize (vector 4 0 0) `shouldBe` vector 1 0 0
                 let v = vector 1 2 3
-                normalize v `shouldSatisfy` approximately 0.00001 (vector 0.26726 0.53452 0.80178)
+                normalize v `shouldSatisfy` nearBy 1e-10 (vector 0.26726 0.53452 0.80178)
                 norm (normalize v) `shouldBe` 1
-        describe "dot" $ do
+        describe "Dot" $ do
             it "computes dot product" $ do
                 let a = vector 1 2 3
                 let b = vector 2 3 4
                 a `dot` b `shouldBe` 20
-        describe "cross" $ do
+        describe "Cross" $ do
             it "computes cross product" $ do
                 let a = vector 1 2 3
                 let b = vector 2 3 4
                 a `cross` b `shouldBe` vector (-1) 2 (-1)
                 b `cross` a `shouldBe` vector 1 (-2) 1
+        describe "Color operations" $ do
+            it "adds colors" $ do
+                let c1 = color 0.9 0.6 0.75
+                    c2 = color 0.7 0.1 0.25
+                c1 ^+^ c2 `shouldBe` color 1.6 0.7 1.0
+            it "subtracts colors" $ do
+                let c1 = color 0.9 0.6 0.75
+                    c2 = color 0.7 0.1 0.25
+                c1 ^-^ c2 `shouldSatisfy` near (color 0.2 0.5 0.5)
+            it "multiplies colors by scalar" $ do
+                let c = color 0.2 0.3 0.4
+                c ^* 2 `shouldBe` color 0.4 0.6 0.8
+            it "mutiplies colors" $ do
+                let c1 = color 1 0.2 0.4
+                    c2 = color 0.9 1 0.1
+                c1 `hadamard` c2 `shouldSatisfy` near (color 0.9 0.2 0.04)
 
 

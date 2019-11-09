@@ -1,17 +1,20 @@
 module RayTracer.Tuple
-(
-    module Linear.Metric,
-    module Linear.V4,
-    module Linear.Vector,
-    module Control.Lens.Getter, 
-    module RayTracer.Tuple)
+(   module Linear.Metric
+    , module Linear.V4
+    , module Linear.V3
+    , module Linear.Vector
+    , module Linear.Epsilon
+    , module Control.Lens.Getter
+    , module RayTracer.Tuple)
  where
 
 import Linear.Metric
-import Linear.V4 (V4(..), _x, _y, _z, _w, _xyz)
+import Linear.V4 hiding (vector, point)
+import Linear.V3 hiding (cross)
 import qualified Linear.V4 as V4
 import qualified Linear.V3 as V3
 import Linear.Vector
+import Linear.Epsilon
 
 import Control.Lens.Getter
 
@@ -38,3 +41,11 @@ vector x y z = V4 x y z 0
 
 cross :: Vector -> Vector -> Vector
 cross a b = V4.vector $ (a ^. _xyz) `V3.cross` (b ^. _xyz)
+
+type Color = V3 Double
+
+color :: Double -> Double -> Double -> Color
+color = V3
+
+hadamard :: (Additive f, Num a) => f a -> f a -> f a
+hadamard = liftU2 (*)
