@@ -1,3 +1,5 @@
+*.png
+
 .stack-work/
 ray-tracer.cabal
 *~
