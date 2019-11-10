@@ -15,7 +15,6 @@ import qualified Linear.V4 as V4
 import qualified Linear.V3 as V3
 import Linear.Vector
 import Linear.Epsilon
-
 import Control.Lens.Getter
 
 type Tuple = V4 Double
