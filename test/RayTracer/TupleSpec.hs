@@ -4,11 +4,7 @@ import Test.Hspec
 
 import RayTracer.Tuple
 
-nearBy :: (Metric f, Num a, Ord a) => a -> f a -> f a -> Bool
-nearBy e v1 v2 = qd v1 v2 < e
-
-near :: (Additive f, Num a, Epsilon (f a)) => f a -> f a -> Bool
-near a1 a2 = nearZero $ a1 ^-^ a2
+import TestUtil
 
 spec :: Spec
 spec = do
@@ -92,6 +88,6 @@ spec = do
             it "mutiplies colors" $ do
                 let c1 = color 1 0.2 0.4
                     c2 = color 0.9 1 0.1
-                c1 `hadamard` c2 `shouldSatisfy` near (color 0.9 0.2 0.04)
+                c1 * c2 `shouldSatisfy` near (color 0.9 0.2 0.04)
 
 
