@@ -6,6 +6,8 @@ import RayTracer.Transformation
 import RayTracer.Matrix
 import RayTracer.Tuple
 
+import TestUtil
+
 spec :: Spec
 spec = do
         describe "Translation" $ do
@@ -38,3 +40,26 @@ spec = do
                 let transform = scaling (-1) 1 1
                     p = point 2 3 4
                 transform !* p `shouldBe` point (-2) 3 4
+        describe "Rotation" $ do
+            it "rotates point around x axis" $ do
+                let p = point 0 1 0
+                    halfQuarter = rotationX $ pi / 4
+                    fullQuarter = rotationX $ pi / 2
+                halfQuarter !* p `shouldSatisfy` near (point 0 (sqrt 2 / 2) (sqrt 2 / 2))
+                fullQuarter !* p `shouldSatisfy` near (point 0 0 1)
+            it "inverts rotation around x axis" $ do
+                let p = point 0 1 0
+                    halfQuarter = rotationX $ pi / 4
+                inverse halfQuarter !* p `shouldSatisfy` near (point 0 (sqrt 2 / 2) (- sqrt 2 / 2))
+            it "rotates point around y axis" $ do
+                let p = point 0 0 1
+                    halfQuarter = rotationY $ pi / 4
+                    fullQuarter = rotationY $ pi / 2
+                halfQuarter !* p `shouldSatisfy` near (point (sqrt 2 / 2) 0 (sqrt 2 / 2))
+                fullQuarter !* p `shouldSatisfy` near (point 1 0 0)
+            it "rotates point around y axis" $ do
+                let p = point 0 1 0
+                    halfQuarter = rotationZ $ pi / 4
+                    fullQuarter = rotationZ $ pi / 2
+                halfQuarter !* p `shouldSatisfy` near (point (- sqrt 2 / 2) (sqrt 2 / 2) 0)
+                fullQuarter !* p `shouldSatisfy` near (point (-1) 0 0)
