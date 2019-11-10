@@ -5,8 +5,8 @@ module RayTracer.Matrix
     , module RayTracer.Matrix
 ) where
 
-import Linear.Matrix
-import Linear.V4
+import Linear.Matrix hiding (translation)
+import Linear.V4 hiding (point, vector)
 import Control.Lens.Getter
 
 type Matrix = M44 Double
