@@ -88,3 +88,22 @@ spec = do
                 let transform = shearing 0 0 0 0 0 1
                     p = point 2 3 4
                 transform !* p `shouldBe` point 2 3 7
+        describe "Chaining transformations" $ do
+            it "applies individual transformations in sequence" $ do
+                let p = point 1 0 1
+                    a = rotationX $ pi / 2
+                    b = scaling 5 5 5
+                    c = translation 10 5 7
+                let p2 = a !* p
+                    p3 = b !* p2
+                    p4 = c !* p3
+                p2 `shouldSatisfy` near (point 1 (-1) 0)
+                p3 `shouldSatisfy` near (point 5 (-5) 0)
+                p4 `shouldSatisfy` near (point 15 0 7)
+            it "applies chained transformations in reversed order" $ do
+                let p = point 1 0 1
+                    a = rotationX $ pi / 2
+                    b = scaling 5 5 5
+                    c = translation 10 5 7
+                    t = c !*! b !*! a
+                t !* p `shouldSatisfy` near (point 15 0 7)
