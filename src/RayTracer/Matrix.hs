@@ -5,8 +5,9 @@ module RayTracer.Matrix
     , module RayTracer.Matrix
 ) where
 
-import Linear.Matrix
-import Linear.V4
+import Linear.Matrix hiding (translation)
+import Linear.V4 hiding (point, vector)
+import Linear.Epsilon
 import Control.Lens.Getter
 
 type Matrix = M44 Double
@@ -22,7 +23,7 @@ determinant :: Matrix -> Double
 determinant = det44
 
 isInvertible :: Matrix -> Bool
-isInvertible = (/= 0) . det44
+isInvertible = not . nearZero . det44
 
 inverse :: Matrix -> Matrix
 inverse = inv44
