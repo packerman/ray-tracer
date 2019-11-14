@@ -63,3 +63,28 @@ spec = do
                     fullQuarter = rotationZ $ pi / 2
                 halfQuarter !* p `shouldSatisfy` near (point (- sqrt 2 / 2) (sqrt 2 / 2) 0)
                 fullQuarter !* p `shouldSatisfy` near (point (-1) 0 0)
+        describe "Shearing" $ do
+            it "moves x in proportion to y" $ do
+                let transform = shearing 1 0 0 0 0 0
+                    p = point 2 3 4
+                transform !* p `shouldBe` point 5 3 4
+            it "moves x in proportion to z" $ do
+                let transform = shearing 0 1 0 0 0 0
+                    p = point 2 3 4
+                transform !* p `shouldBe` point 6 3 4
+            it "moves y in proportion to x" $ do
+                let transform = shearing 0 0 1 0 0 0
+                    p = point 2 3 4
+                transform !* p `shouldBe` point 2 5 4
+            it "moves y in proportion to z" $ do
+                let transform = shearing 0 0 0 1 0 0
+                    p = point 2 3 4
+                transform !* p `shouldBe` point 2 7 4
+            it "moves z in proportion to x" $ do
+                let transform = shearing 0 0 0 0 1 0
+                    p = point 2 3 4
+                transform !* p `shouldBe` point 2 3 6
+            it "moves z in proportion to y" $ do
+                let transform = shearing 0 0 0 0 0 1
+                    p = point 2 3 4
+                transform !* p `shouldBe` point 2 3 7

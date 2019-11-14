@@ -31,3 +31,9 @@ rotationZ r = matrix (cos r) (- sin r) 0 0
                     (sin r) (cos r) 0 0
                     0 0 1 0
                     0 0 0 1
+
+shearing :: Double -> Double -> Double -> Double -> Double -> Double -> Matrix
+shearing xy xz yx yz zx zy = matrix 1 xy xz 0
+                                    yx 1 yz 0
+                                    zx zy 1 0
+                                    0 0 0 1
