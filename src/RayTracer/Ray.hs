@@ -1,5 +1,6 @@
 module RayTracer.Ray 
 (   ray
+    , position
     , Ray(origin, direction)
 )
 where
@@ -13,3 +14,6 @@ data Ray = Ray
 
 ray :: Point -> Vector -> Ray
 ray = Ray
+
+position :: Ray -> Double -> Point
+position (Ray origin direction) t = origin ^+^ direction ^* t
