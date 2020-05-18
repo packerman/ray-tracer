@@ -3,9 +3,16 @@ module RayTracer.Sphere where
 import RayTracer.Ray
 import RayTracer.Tuple
 
-data Sphere = Sphere
+data Intersection = Intersection
+    {   object :: Sphere,
+        t :: Double
+    }
+    deriving (Eq, Show)
 
-intersect :: Sphere -> Ray -> [Double]
+data Sphere = Sphere
+                deriving (Eq, Show)
+
+intersect :: Sphere -> Ray -> [Intersection]
 intersect sphere ray = let sphereToRay = origin ray ^-^ point 0 0 0
                            a = direction ray `dot` direction ray
                            b = 2 * (direction ray) `dot` sphereToRay
@@ -14,4 +21,4 @@ intersect sphere ray = let sphereToRay = origin ray ^-^ point 0 0 0
                         in if discriminant < 0 then []
                             else let t1 = (-b - sqrt discriminant) / (2*a)
                                      t2 = (-b + sqrt discriminant) / (2*a)
-                                    in  [t1, t2]
+                                    in  [Intersection sphere t1, Intersection sphere t2]
