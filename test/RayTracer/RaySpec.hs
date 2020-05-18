@@ -6,6 +6,7 @@ import Data.Function
 
 import RayTracer.Ray
 import RayTracer.Tuple
+import RayTracer.Transformation
 
 spec :: Spec
 spec = do
@@ -23,4 +24,12 @@ spec = do
                 position r 1 `shouldBe` point 3 3 4
                 position r (-1) `shouldBe` point 1 3 4
                 position r 2.5 `shouldBe` point 4.5 3 4
-
+        describe "Ray transformations" $ do
+            it "translates a ray" $ do
+                let r = ray (point 1 2 3) (vector 0 1 0)
+                    m = translation 3 4 5
+                transform r m `shouldBe` ray (point 4 6 8) (vector 0 1 0)
+            it "scales a ray" $ do
+                let r = ray (point 1 2 3) (vector 0 1 0)
+                    m = scaling 2 3 4
+                transform r m `shouldBe` ray (point 2 6 12) (vector 0 3 0)
