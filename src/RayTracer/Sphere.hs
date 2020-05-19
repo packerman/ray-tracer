@@ -2,6 +2,7 @@ module RayTracer.Sphere where
 
 import RayTracer.Ray
 import RayTracer.Tuple
+import RayTracer.Matrix
 
 data Intersection = Intersection
     {   t :: Double
@@ -10,9 +11,14 @@ data Intersection = Intersection
     deriving (Eq, Show)
 
 data Sphere = Sphere
-                deriving (Eq, Show)
+    {   transformation :: Matrix
+    }
+    deriving (Eq, Show)
 
-sphere = Sphere
+sphere = Sphere identity
+
+transform :: Sphere -> Matrix -> Sphere
+transform (Sphere t) m = Sphere (m !*! t)
 
 intersect :: Sphere -> Ray -> [Intersection]
 intersect sphere ray = let sphereToRay = origin ray ^-^ point 0 0 0

@@ -3,8 +3,10 @@ module RayTracer.SphereSpec where
 import Test.Hspec
 
 import RayTracer.Sphere
-import RayTracer.Ray
+import RayTracer.Ray hiding (transform)
 import RayTracer.Tuple
+import RayTracer.Matrix
+import RayTracer.Transformation
 
 spec :: Spec
 spec = do
@@ -33,3 +35,11 @@ spec = do
                 let r = ray (point 0 0 (-5)) (vector 0 0 1)
                     s = sphere
                 object <$> intersect s r `shouldBe` [s, s]
+        describe "Sphere transformation" $ do
+            it "has default value" $ do
+                let s = sphere
+                transformation s `shouldBe` identity
+            it "can be changed" $ do
+                let s = sphere
+                    t = translation 2 3 4
+                (transformation $ transform s t) `shouldBe` t
