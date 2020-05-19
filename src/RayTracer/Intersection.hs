@@ -1,13 +1,14 @@
 module RayTracer.Intersection where
 
 import Data.List
+import Data.Function
 
 import RayTracer.Sphere
 
 intersection = Intersection
 
 intersections :: [Intersection] -> [Intersection]
-intersections = sortBy (\i1 i2 -> compare (t i1) (t i2))
+intersections = sortBy (on compare t)
 
 hit :: [Intersection] -> Maybe Intersection
-hit = find (\i -> t i >= 0)
+hit = find ((>= 0) . t)

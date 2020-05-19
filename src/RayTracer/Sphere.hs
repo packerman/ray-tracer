@@ -1,6 +1,6 @@
 module RayTracer.Sphere where
 
-import RayTracer.Ray
+import RayTracer.Ray as Ray
 import RayTracer.Tuple
 import RayTracer.Matrix
 
@@ -21,11 +21,12 @@ transform :: Sphere -> Matrix -> Sphere
 transform (Sphere t) m = Sphere (m !*! t)
 
 intersect :: Sphere -> Ray -> [Intersection]
-intersect sphere ray = let sphereToRay = origin ray ^-^ point 0 0 0
-                           a = direction ray `dot` direction ray
-                           b = 2 * (direction ray) `dot` sphereToRay
-                           c = sphereToRay `dot` sphereToRay - 1
-                           discriminant = b * b - 4 * a * c
+intersect sphere ray = let  ray2 = Ray.transform ray $ inverse $ transformation sphere
+                            sphereToRay = origin ray2 ^-^ point 0 0 0
+                            a = direction ray2 `dot` direction ray2
+                            b = 2 * (direction ray2) `dot` sphereToRay
+                            c = sphereToRay `dot` sphereToRay - 1
+                            discriminant = b * b - 4 * a * c
                         in if discriminant < 0 then []
                             else let t1 = (-b - sqrt discriminant) / (2*a)
                                      t2 = (-b + sqrt discriminant) / (2*a)
