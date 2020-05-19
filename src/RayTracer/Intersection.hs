@@ -4,6 +4,7 @@ import Data.List
 import Data.Function
 
 import RayTracer.Sphere
+import RayTracer.Types
 
 intersection = Intersection
 

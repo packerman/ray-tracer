@@ -7,6 +7,7 @@ import RayTracer.Ray (ray)
 import RayTracer.Tuple
 import RayTracer.Matrix
 import RayTracer.Transformation
+import RayTracer.Types
 
 spec :: Spec
 spec = do
