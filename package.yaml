@@ -47,6 +47,15 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - ray-tracer
+  silhouette-exe:
+    main:                silhouette.hs
+    source-dirs:         example
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - ray-tracer
 
 tests:
   ray-tracer-test:
