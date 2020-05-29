@@ -110,5 +110,3 @@ spec = do
                             7 0 5 4
                             6 (-2) 0 5
             (a !*! b) !*! inverse b `shouldSatisfy` near a
-        
- 

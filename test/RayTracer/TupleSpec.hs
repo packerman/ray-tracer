@@ -25,10 +25,12 @@ spec = do
                 let a1 = tuple 3 (-2) 5 1
                 let a2 = tuple (-2) 3 1 0
                 a1 ^+^ a2 `shouldBe` tuple 1 1 6 1
+                a1 + a2 `shouldBe` tuple 1 1 6 1
             it "subtracts points" $ do
                 let p1 = point 3 2 1
                 let p2 = point 5 6 7
                 p1 ^-^ p2 `shouldBe` vector (-2) (-4) (-6)
+                p1 - p2 `shouldBe` vector (-2) (-4) (-6)
             it "subtracts vector from a point" $ do
                 let p = point 3 2 1
                 let v = vector 5 6 7

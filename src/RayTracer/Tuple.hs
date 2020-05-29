@@ -45,6 +45,3 @@ type Color = V3 Double
 
 color :: Double -> Double -> Double -> Color
 color = V3
-
-hadamard :: (Additive f, Num a) => f a -> f a -> f a
-hadamard = liftU2 (*)
