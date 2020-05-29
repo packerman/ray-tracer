@@ -9,7 +9,7 @@ import RayTracer.Types
 intersection = Intersection
 
 intersections :: [Intersection] -> [Intersection]
-intersections = sortBy (on compare t)
+intersections = sortBy (on compare time)
 
 hit :: [Intersection] -> Maybe Intersection
-hit = find ((>= 0) . t)
+hit = find ((>= 0) . time)

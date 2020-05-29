@@ -3,7 +3,7 @@ module RayTracer.Types where
 import RayTracer.Matrix
 
 data Intersection = Intersection
-    {   t :: Double
+    {   time :: Double
     ,   object :: Sphere
     }
     deriving (Eq, Show)

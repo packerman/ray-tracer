@@ -13,7 +13,7 @@ wallZ = 10
 
 wallSize = 7 :: Double
 
-canvasPixels = 1200  :: Int
+canvasPixels = 100  :: Int
 
 pixelSize = wallSize / fromIntegral canvasPixels
 
