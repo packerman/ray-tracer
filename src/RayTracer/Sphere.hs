@@ -21,3 +21,6 @@ intersect sphere ray = let  ray2 = Ray.transform ray $ inverse $ transformation 
                             else let t1 = (-b - sqrt discriminant) / (2*a)
                                      t2 = (-b + sqrt discriminant) / (2*a)
                                     in  [Intersection t1 sphere, Intersection t2 sphere]
+
+normalAt :: Sphere -> Point -> Vector
+normalAt _ p = p - point 0 0 0

@@ -53,3 +53,20 @@ spec = do
                 let r = ray (point 0 0 (-5)) (vector 0 0 1)
                     s = sphere
                 intersect (transform sphere (translation 5 0 0)) r `shouldBe` []
+        describe "normal on a sphere" $ do
+            it "normal on a sphere at a point on the x axis" $ do
+                let s = sphere
+                normalAt s (point 1 0 0) `shouldBe` vector 1 0 0
+            it "normal on a sphere at a point on the y axis" $ do
+                let s = sphere
+                normalAt s (point 0 1 0) `shouldBe` vector 0 1 0
+            it "normal on a sphere at a point on the z axis" $ do
+                let s = sphere
+                normalAt s (point 0 0 1) `shouldBe` vector 0 0 1
+            it "normal on a sphere at a nonaxial point" $ do
+                let s = sphere
+                normalAt s (point (sqrt 3 / 3) (sqrt 3 / 3) (sqrt 3 / 3)) `shouldBe` vector (sqrt 3 / 3) (sqrt 3 / 3) (sqrt 3 / 3)
+            it "normal is a normalized vector" $ do
+                let s = sphere
+                    n = normalAt s (point (sqrt 3 / 3) (sqrt 3 / 3) (sqrt 3 / 3))
+                n `shouldBe` normalize n
