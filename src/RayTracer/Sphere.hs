@@ -1,5 +1,7 @@
 module RayTracer.Sphere where
 
+import qualified Linear.V4 as V4
+
 import RayTracer.Ray as Ray
 import RayTracer.Tuple
 import RayTracer.Matrix
@@ -23,4 +25,7 @@ intersect sphere ray = let  ray2 = Ray.transform ray $ inverse $ transformation 
                                     in  [Intersection t1 sphere, Intersection t2 sphere]
 
 normalAt :: Sphere -> Point -> Vector
-normalAt _ p = p - point 0 0 0
+normalAt sphere worldPoint = let objectPoint = inverse (transformation sphere) !* worldPoint
+                                 objectNormal = objectPoint - point 0 0 0
+                                 worldNormal = (transpose (inv33 (submatrix33 (transformation sphere)))) !* (objectNormal ^. _xyz)
+                             in normalize (V4.vector worldNormal)

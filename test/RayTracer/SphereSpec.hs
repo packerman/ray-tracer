@@ -9,6 +9,8 @@ import RayTracer.Matrix
 import RayTracer.Transformation
 import RayTracer.Types
 
+import TestUtil
+
 spec :: Spec
 spec = do
         describe "Ray intersecting a sphere" $ do
@@ -70,3 +72,10 @@ spec = do
                 let s = sphere
                     n = normalAt s (point (sqrt 3 / 3) (sqrt 3 / 3) (sqrt 3 / 3))
                 n `shouldBe` normalize n
+        describe "normalAt on transformed sphere" $ do
+            it "computes the normal on a translated sphere" $ do
+                let s = transform sphere $ translation 0 1 0
+                normalAt s (point 0 1.70711 (-0.70711)) `shouldSatisfy` nearBy 1e-10 (vector 0 0.70711 (-0.70711))
+            it "computes the normal on a transformed sphere" $ do
+                let s = transform sphere $ scaling 1 0.5 1 !*! rotationZ pi/5
+                normalAt s (point 0 (sqrt 2 / 2) (- sqrt 2 / 2)) `shouldSatisfy` nearBy 1e-10 (vector 0 0.97014 (-0.24254))

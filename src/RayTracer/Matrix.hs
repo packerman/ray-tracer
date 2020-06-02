@@ -27,3 +27,6 @@ isInvertible = not . nearZero . det44
 
 inverse :: Matrix -> Matrix
 inverse = inv44
+
+submatrix33 :: Matrix -> M33 Double
+submatrix33 m = (m ^. _xyz) ^.column _xyz
