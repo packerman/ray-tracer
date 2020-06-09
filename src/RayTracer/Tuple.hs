@@ -23,7 +23,7 @@ tuple :: Double -> Double -> Double -> Double -> Tuple
 tuple = V4
 
 isPoint :: Tuple -> Bool
-isPoint (V4 _ _ _ w) = w == 1 
+isPoint (V4 _ _ _ w) = w == 1
 
 isVector :: Tuple -> Bool
 isVector (V4 _ _ _ w) = w == 0
@@ -36,7 +36,7 @@ point x y z = V4 x y z 1
 type Vector = Tuple
 
 vector :: Double -> Double -> Double -> Vector
-vector x y z = V4 x y z 0 
+vector x y z = V4 x y z 0
 
 cross :: Vector -> Vector -> Vector
 cross a b = V4.vector $ (a ^. _xyz) `V3.cross` (b ^. _xyz)
@@ -45,3 +45,6 @@ type Color = V3 Double
 
 color :: Double -> Double -> Double -> Color
 color = V3
+
+reflect :: Vector -> Vector -> Vector
+reflect v n = v - n ^* (2 * dot v n)
