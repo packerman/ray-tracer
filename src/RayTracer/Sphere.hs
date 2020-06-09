@@ -4,11 +4,12 @@ import RayTracer.Ray as Ray
 import RayTracer.Tuple
 import RayTracer.Matrix
 import RayTracer.Types
+import RayTracer.Material
 
-sphere = Sphere identity
+sphere = Sphere identity defaultMaterial
 
 transform :: Sphere -> Matrix -> Sphere
-transform (Sphere t) m = Sphere (m !*! t)
+transform (Sphere t m) matrix = Sphere (matrix !*! t) m
 
 intersect :: Sphere -> Ray -> [Intersection]
 intersect sphere ray = let  ray2 = Ray.transform ray $ inverse $ transformation sphere
