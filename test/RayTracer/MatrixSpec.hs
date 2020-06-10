@@ -110,3 +110,11 @@ spec = do
                             7 0 5 4
                             6 (-2) 0 5
             (a !*! b) !*! inverse b `shouldSatisfy` near a
+        it "extracts 3x3 submatrix from 4x4 matrix" $ do
+            let m = matrix (-6) 1 1 6
+                            (-8) 5 8 6
+                            (-1) 0 8 2
+                            (-7) 1 (-1) 1
+            submatrix33 m `shouldBe` V3 (V3 (-6) 1 1)
+                                    (V3 (-8) 5 8)
+                                    (V3 (-1) 0 8)

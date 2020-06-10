@@ -7,8 +7,11 @@ module RayTracer.Matrix
 
 import Linear.Matrix hiding (translation)
 import Linear.V4 hiding (point, vector)
+import qualified Linear.V4 as V4 (vector)
 import Linear.Epsilon
 import Control.Lens.Getter
+
+import RayTracer.Tuple
 
 type Matrix = M44 Double
 
@@ -27,3 +30,9 @@ isInvertible = not . nearZero . det44
 
 inverse :: Matrix -> Matrix
 inverse = inv44
+
+submatrix33 :: Matrix -> M33 Double
+submatrix33 m = (m ^. _xyz) ^.column _xyz
+
+normalTransform :: Matrix -> Vector -> Vector
+normalTransform matrix normal = V4.vector $ (transpose $ inv33 $ submatrix33 matrix) !* (normal ^. _xyz)
