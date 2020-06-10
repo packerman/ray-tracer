@@ -1,6 +1,7 @@
 module RayTracer.Material where
 
 import RayTracer.Tuple as Tuple
+import RayTracer.Light
 import RayTracer.Types as Types
 
 defaultMaterial :: Material

@@ -23,8 +23,3 @@ data Sphere = Sphere
     ,   material :: Material
     }
     deriving (Eq, Show)
-
-data Light = Light
-    {   intensity :: Color
-    ,   position :: Point
-    }
