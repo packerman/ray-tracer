@@ -7,8 +7,10 @@ import RayTracer.Light
 import RayTracer.Sphere
 import RayTracer.Material
 import RayTracer.Transformation
+import RayTracer.Ray
 import RayTracer.Tuple as Tuple
 import RayTracer.Types as Types
+import RayTracer.Class
 
 spec :: Spec
 spec = do
@@ -21,3 +23,7 @@ spec = do
             light w `shouldBe` Just l
             objects w `shouldSatisfy` (s1 `elem`)
             objects w `shouldSatisfy` (s2 `elem`)
+        it "intersects with ray" $ do
+            let w = defaultWorld
+                r = ray (point 0 0 (-5)) (vector 0 0 1)
+            time <$> (intersect w r) `shouldBe` [4, 4.5, 5.5, 6]

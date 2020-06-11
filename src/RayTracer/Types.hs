@@ -3,6 +3,12 @@ module RayTracer.Types where
 import RayTracer.Tuple
 import RayTracer.Matrix
 
+data Ray = Ray
+    {   origin :: Point
+    ,   direction :: Vector
+    }
+    deriving (Eq, Show)
+
 data Intersection = Intersection
     {   time :: Double
     ,   object :: Sphere

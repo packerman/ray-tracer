@@ -6,6 +6,7 @@ import RayTracer.Canvas
 import RayTracer.Ray
 import RayTracer.Sphere
 import RayTracer.Intersection
+import RayTracer.Class
 
 rayOrigin = point 0 0 (-5)
 

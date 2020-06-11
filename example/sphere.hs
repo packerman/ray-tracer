@@ -9,6 +9,7 @@ import RayTracer.Intersection
 import RayTracer.Material
 import RayTracer.Light
 import RayTracer.Types as Types
+import RayTracer.Class
 
 rayOrigin = point 0 0 (-5)
 

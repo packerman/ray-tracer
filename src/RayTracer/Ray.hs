@@ -8,12 +8,7 @@ where
 
 import RayTracer.Tuple
 import RayTracer.Matrix
-
-data Ray = Ray
-    {   origin :: Point
-    ,   direction :: Vector
-    }
-    deriving (Eq, Show)
+import RayTracer.Types
 
 ray :: Point -> Vector -> Ray
 ray = Ray

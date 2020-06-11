@@ -7,8 +7,9 @@ import RayTracer.Ray (ray)
 import RayTracer.Tuple
 import RayTracer.Matrix
 import RayTracer.Transformation
-import RayTracer.Types
 import RayTracer.Material
+import RayTracer.Types
+import RayTracer.Class
 
 import TestUtil
 
