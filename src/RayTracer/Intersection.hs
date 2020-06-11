@@ -8,7 +8,7 @@ import RayTracer.Types
 intersection = Intersection
 
 instance Ord Intersection where
-    compare i1 i2 = compare (time i1) (time i2)
+    compare = on compare time
 
 intersections :: [Intersection] -> [Intersection]
 intersections = sort
