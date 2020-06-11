@@ -11,7 +11,7 @@ import RayTracer.Light
 import RayTracer.Types as Types
 import RayTracer.Class
 
-rayOrigin = point 0 0 (-5)
+rayOrigin = Tuple.point 0 0 (-5)
 
 wallZ = 10
 
@@ -27,20 +27,20 @@ black = Tuple.color 0 0 0
 
 shape = sphere { material = defaultMaterial { Types.color = Tuple.color 1 0.2 1 } }
 
-light = pointLight (point (-10) 10 (-10)) (Tuple.color 1 1 1)
+light = pointLight (Tuple.point (-10) 10 (-10)) (Tuple.color 1 1 1)
 
 canvas = createCanvas canvasPixels canvasPixels
             ([0..canvasPixels-1] >>= (\y ->
                 let worldY = half - pixelSize * fromIntegral y
                 in [0..canvasPixels-1] <&> (\x ->
                     let worldX = - half + pixelSize * fromIntegral x
-                        position = point worldX worldY wallZ
+                        position = Tuple.point worldX worldY wallZ
                         r = ray rayOrigin $ normalize $ position ^-^ rayOrigin
                         xs = intersect shape r
-                    in (x, y, maybe black (\hit -> let point = Ray.position r (time hit)
-                                                       normal = normalAt (object hit) point
+                    in (x, y, maybe black (\hit -> let point = Ray.position r (Types.time hit)
+                                                       normal = normalAt (Types.object hit) point
                                                        eye = - (direction r)
-                                                    in lighting (material $ object $ hit) light point eye normal)
+                                                    in lighting (material $ Types.object $ hit) light point eye normal)
                                     (hit xs)))))
 
 main = saveCanvas "sphere.png" canvas

@@ -1,14 +1,14 @@
 import Data.Functor
 import Data.Maybe
 
-import RayTracer.Tuple
+import RayTracer.Tuple as Tuple
 import RayTracer.Canvas
 import RayTracer.Ray
 import RayTracer.Sphere
 import RayTracer.Intersection
 import RayTracer.Class
 
-rayOrigin = point 0 0 (-5)
+rayOrigin = Tuple.point 0 0 (-5)
 
 wallZ = 10
 
@@ -30,7 +30,7 @@ canvas = createCanvas canvasPixels canvasPixels
                 let worldY = half - pixelSize * fromIntegral y
                 in [0..canvasPixels-1] <&> (\x ->
                     let worldX = - half + pixelSize * fromIntegral x
-                        position = point worldX worldY wallZ
+                        position = Tuple.point worldX worldY wallZ
                         r = ray rayOrigin $ normalize $ position ^-^ rayOrigin
                         xs = intersect sphere r
                     in (x, y, if (isJust $ hit xs) then red else black))))
