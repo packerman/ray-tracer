@@ -3,11 +3,13 @@
 
 module RayTracer.World where
 
+import Data.Maybe
+
 import RayTracer.Sphere
 import RayTracer.Light
 import RayTracer.Material
 import RayTracer.Transformation
-import RayTracer.Intersection
+import RayTracer.Intersection as I
 import RayTracer.Tuple as TU
 import RayTracer.Ray
 import RayTracer.Types as TY
@@ -28,3 +30,8 @@ defaultWorld = let l = pointLight (TU.point (-10) 10 (-10)) (TU.color 1 1 1)
 
 instance Intersectable World where
     intersect World{objects} ray = intersections $ (`intersect` ray) =<< objects
+
+shadeHit :: World -> Precomputed -> Color
+shadeHit world comps = maybe (TU.color 0 0 0) (\light ->
+        lighting (material $ I.object $ comps) light (I.point comps) (eyeVector comps) (normalVector comps)
+    ) (light world)
