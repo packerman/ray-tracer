@@ -4,7 +4,7 @@ import Test.Hspec
 
 import RayTracer.Sphere
 import RayTracer.Intersection as I
-import RayTracer.Tuple as TP
+import RayTracer.Tuple as TU
 import RayTracer.Types as TY
 import RayTracer.Ray
 
@@ -39,12 +39,27 @@ spec = do
             hit xs `shouldBe` Just i4
     describe "Function prepareComputations" $ do
         it "precomputes the state of an intersection" $ do
-            let r = ray (TP.point 0 0 (-5)) (vector 0 0 1)
+            let r = ray (TU.point 0 0 (-5)) (vector 0 0 1)
                 shape = sphere
                 i = intersection 4 shape
                 comps = prepareComputations i r
             I.time comps `shouldBe` TY.time i
             I.object comps `shouldBe` TY.object i
-            I.point comps `shouldBe` TP.point 0 0 (-1)
+            I.point comps `shouldBe` TU.point 0 0 (-1)
             eyeVector comps `shouldBe` vector 0 0 (-1)
+            normalVector comps `shouldBe` vector 0 0 (-1)
+        it "intersection occurs on the outside" $ do
+            let r = ray (TU.point 0 0 (-5)) (vector 0 0 1)
+                shape = sphere
+                i = intersection 4 shape
+                comps = prepareComputations i r
+            inside comps `shouldBe` False
+        it "intersection occurs on the inside" $ do
+            let r = ray (TU.point 0 0 0) (vector 0 0 1)
+                shape = sphere
+                i = intersection 1 shape
+                comps = prepareComputations i r
+            I.point comps `shouldBe` TU.point 0 0 1
+            eyeVector comps `shouldBe` vector 0 0 (-1)
+            inside comps `shouldBe` True
             normalVector comps `shouldBe` vector 0 0 (-1)

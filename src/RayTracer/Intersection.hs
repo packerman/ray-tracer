@@ -5,7 +5,7 @@ module RayTracer.Intersection where
 import Data.List
 import Data.Function
 
-import RayTracer.Tuple (Point, Vector)
+import RayTracer.Tuple (Point, Vector, dot)
 import RayTracer.Ray
 import RayTracer.Sphere
 import RayTracer.Types (Intersection(..), Sphere, Ray)
@@ -26,6 +26,7 @@ data Precomputed = Precomputed
     {   time :: Double
     ,   object :: Sphere
     ,   point :: Point
+    ,   inside :: Bool
     ,   eyeVector :: Vector
     ,   normalVector :: Vector
     }
@@ -35,10 +36,14 @@ prepareComputations intersection ray =
     let t = TY.time intersection
         p = position ray t
         o = TY.object intersection
+        eye = - (direction ray)
+        normal = normalAt o p
+        inside = normal `dot` eye < 0
     in Precomputed
         {   time = t
         ,   object = o
         ,   point = p
-        ,   eyeVector = - (direction ray)
-        ,   normalVector = normalAt o p
+        ,   inside = inside
+        ,   eyeVector = eye
+        ,   normalVector = if inside then (- normal) else normal
         }
