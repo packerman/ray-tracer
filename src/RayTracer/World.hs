@@ -35,3 +35,8 @@ shadeHit :: World -> Precomputed -> Color
 shadeHit world comps = maybe (TU.color 0 0 0) (\light ->
         lighting (material $ I.object $ comps) light (I.point comps) (eyeVector comps) (normalVector comps)
     ) (light world)
+
+colorAt :: World -> Ray -> Color
+colorAt world ray = let xs = intersect world ray
+                        hit = I.hit xs
+                    in maybe (TU.color 0 0 0) (\hit -> shadeHit world (prepareComputations hit ray)) hit

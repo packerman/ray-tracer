@@ -37,11 +37,29 @@ spec = do
                 shape = head $ objects w
                 i = intersection 4 shape
                 comps = prepareComputations i r
-            shadeHit w comps `shouldSatisfy` nearBy 1e-4 (TU.color 0.38066 0.47583 0.2855)
+            shadeHit w comps `shouldSatisfy` nearBy 1e-5 (TU.color 0.38066 0.47583 0.2855)
         it "shedes intersection from the inside" $ do
             let w = defaultWorld { light = Just $ pointLight (point 0 0.25 0) (TU.color 1 1 1)}
                 r = ray (point 0 0 0) (vector 0 0 1)
                 shape = objects w !! 1
                 i = intersection 0.5 shape
                 comps = prepareComputations i r
-            shadeHit w comps `shouldSatisfy` nearBy 1e-4 (TU.color 0.90498 0.90498 0.90498)
+            shadeHit w comps `shouldSatisfy` nearBy 1e-5 (TU.color 0.90498 0.90498 0.90498)
+    describe "colorAt function" $ do
+        it "returns a color when a ray misses" $ do
+            let w = defaultWorld
+                r = ray (point 0 0 (-5)) (vector 0 1 0)
+            colorAt w r `shouldBe` TU.color 0 0 0
+        it "returns a color when a ray hits" $ do
+            let w = defaultWorld
+                r = ray (point 0 0 (-5)) (vector 0 0 1)
+            colorAt w r `shouldSatisfy` nearBy 1e-5 (TU.color 0.38066 0.47583 0.2855)
+        it "return a color with an intersection behind the ray" $ do
+            let w = defaultWorld
+                outer = (head $ objects w)
+                outer' = outer { material = (material outer) { ambient = 1 } }
+                inner = objects w !! 1
+                inner' = inner { material = (material inner) { ambient = 1 } }
+                w' = w { objects = [outer', inner'] }
+                r = ray (point 0 0 0.75) (vector 0 0 (-1))
+            colorAt w' r `shouldBe` (TY.color $ material inner')
